@@ -1,8 +1,11 @@
- #!/bin/bash
+#!/bin/bash
 
- SG_ID="sg-03e2d48d7f8078987" 
- AMI_ID="ami-0220d79f3f480ecf5"
- for instance in $@
+SG_ID="sg-03e2d48d7f8078987" # replace with your ID
+AMI_ID="ami-0220d79f3f480ecf5"
+ZONE_ID="Z021505121JQZYHY8FIMN"
+DOMAIN_NAME="divakar88.online"
+
+for instance in $@
 do
     INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $AMI_ID \
