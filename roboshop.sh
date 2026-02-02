@@ -1,7 +1,7 @@
  #!/bin/bash
 
  SG_ID="sg-03e2d48d7f8078987" 
- AMI-ID="ami-0220d79f3f480ecf5"
+ AMI_ID="ami-0220d79f3f480ecf5"
  for instance in $@
 do
     INSTANCE_ID=$( aws ec2 run-instances \
