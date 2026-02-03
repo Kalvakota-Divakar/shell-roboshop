@@ -25,7 +25,8 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing NodeJS.
+echo "Setting up NodeJS"
 dnf module disable nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Disabling NodeJS Default version"
 
