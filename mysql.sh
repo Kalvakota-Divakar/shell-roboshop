@@ -23,7 +23,8 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing mysql.
+echo "Setting up MySQL Repository"
 dnf install mysql-server -y &>>$LOGS_FILE
 VALIDATE $? "Install MySQL server"
 
