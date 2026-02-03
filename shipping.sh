@@ -8,15 +8,15 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
-MYSQL_HOST=mysql.daws88s.online
-
+MYSQL_HOST=mysql.divakar88.online
+# checking for root user.
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
     exit 1
 fi
 
 mkdir -p $LOGS_FOLDER
-
+# function to validate each command execution status.
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -25,7 +25,8 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing maven.
+echo "Setting up Maven"
 dnf install maven -y &>>$LOGS_FILE
 VALIDATE $? "Installing Maven"
 
@@ -66,6 +67,7 @@ dnf install mysql -y  &>>$LOGS_FILE
 VALIDATE $? "Installing MySQL"
 
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
+# check whether the DB is already created or not.
 if [ $? -ne 0 ]; then
 
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
