@@ -8,7 +8,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
-MYSQL_HOST=mysql.daws88s.online
+MYSQL_HOST=mysql.divakar88.online
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
@@ -25,7 +25,8 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing rabbitmq.
+echo "Setting up RabbitMQ Repository"
 cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "Added RabbitMQ repo"
 
