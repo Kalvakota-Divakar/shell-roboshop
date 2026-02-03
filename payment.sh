@@ -8,8 +8,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
-MYSQL_HOST=mysql.daws88s.online
-
+MYSQL_HOST=mysql.divakar88.online
+# checking for root user.
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
     exit 1
@@ -25,11 +25,13 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing python.
+echo "Setting up Python"
 dnf install python3 gcc python3-devel -y &>>$LOGS_FILE
 VALIDATE $? "Installing Python"
-
+# creating roboshop user.
 id roboshop &>>$LOGS_FILE
+# check whether the user already exist or not.
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
     VALIDATE $? "Creating system user"
