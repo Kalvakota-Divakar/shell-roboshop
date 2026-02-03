@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# validating root user or not.
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
@@ -7,14 +7,14 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+# checking for root user.
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
     exit 1
 fi
 
 mkdir -p $LOGS_FOLDER
-
+# function to validate each command execution status.
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -23,14 +23,15 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-
+# installing redis.
+echo "Setting up Redis Repository"
 dnf module disable redis -y &>>$LOGS_FILE
 dnf module enable redis:7 -y &>>$LOGS_FILE
 VALIDATE $? "Enable Redis:7"
 
 dnf install redis -y  &>>$LOGS_FILE
 VALIDATE $? "Installed Redis"
-
+# configuring redis to allow remote connections.
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
 VALIDATE $? "Allowing remote connections"
 
